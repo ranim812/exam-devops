@@ -10,19 +10,19 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'  // Changed from 'sh' to 'bat'
             }
         }
         
         stage('Run Tests') {
             steps {
-                sh 'npm test'
+                bat 'npm test'  // Changed from 'sh' to 'bat'
             }
         }
         
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t todo-app .'
+                bat 'docker build -t todo-app .'  // Changed from 'sh' to 'bat'
             }
         }
     }
