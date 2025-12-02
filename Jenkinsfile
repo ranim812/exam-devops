@@ -14,17 +14,14 @@ pipeline {
             }
         }
         
-        stage('Run Tests') {
-            steps {
-                bat 'npm test'
-            }
-            post {
-                always {
-                    // Always continue even if tests fail
-                    echo 'Test stage completed'
-                }
+    stage('Run Tests') {
+        steps {
+            script {
+                def testResult = bat(returnStatus: true, script: 'npm test')
+                echo "Test exit code: ${testResult}"
             }
         }
+    }
         
         stage('Build Docker Image') {
             steps {
