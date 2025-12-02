@@ -10,20 +10,38 @@ pipeline {
         
         stage('Install Dependencies') {
             steps {
-                bat 'npm install'  // Changed from 'sh' to 'bat'
+                bat 'npm install'
             }
         }
         
         stage('Run Tests') {
             steps {
-                bat 'npm test'  // Changed from 'sh' to 'bat'
+                bat 'npm test'
+            }
+            post {
+                always {
+                    // Always continue even if tests fail
+                    echo 'Test stage completed'
+                }
             }
         }
         
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t todo-app .'  // Changed from 'sh' to 'bat'
+                bat 'docker build -t todo-app .'
             }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline succeeded'
+        }
+        failure {
+            echo 'Pipeline failed'
+        }
+        always {
+            echo 'Pipeline completed'
         }
     }
 }
